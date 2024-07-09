@@ -1,7 +1,6 @@
 #!/usr/bin/node
 
 const request = require('request');
-const URL = "https://swapi-api.alx-tools.com/api/films";
 
 if (process.argv.length !== 3) {
   console.log("Usage: script.js <movie_id>");
