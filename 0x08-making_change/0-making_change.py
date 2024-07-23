@@ -10,16 +10,23 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
-    # Initialize an array with a value greater than any
-    # possible number of coins needed
-    num_coins = [float('inf')] * (total + 1)
+    tmp = total
 
-    # Base case: 0 coins are needed to make the amount 0
-    num_coins[0] = 0
+    num_coins_count = 0
+    coin_idx = 0
 
-    for i in range(total + 1):
-        for coin in coins:
-            if coin <= i:
-                num_coins[i] = min(num_coins[i], num_coins[i - coin] + 1)
+    sorted_coins = sorted(coins, reverse=True)
 
-    return num_coins[total] if num_coins[total] != float('inf') else -1
+    coins_len = len(coins)
+
+    while tmp > 0:
+        if coin_idx >= coins_len:
+            return -1
+
+        if tmp - sorted_coins[coin_idx] >= 0:
+            tmp -= sorted_coins[coin_idx]
+            num_coins_count += 1
+        else:
+            coin_idx += 1
+
+    return num_coins_count
