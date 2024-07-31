@@ -19,20 +19,19 @@ def island_perimeter(grid):
     Returns:
         The perimeter of the Island
     """
-
+    if type(grid) != list:
+        return 0
     rows = len(grid)
-    cols = len(grid[0])
+    cols = len(grid[0]) if rows else 0
     perimeter = 0
 
-    for i in range(1, rows - 1):
-        for j in range(1, cols - 1):
-            if grid[i][j] == 1:
-                if grid[i - 1][j] == 0:
-                    perimeter += 1
-                if grid[i + 1][j] == 0:
-                    perimeter += 1
-                if grid[i][j - 1] == 0:
-                    perimeter += 1
-                if grid[i][j + 1] == 0:
-                    perimeter += 1
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            idx = [(i - 1, j), (i, j - 1), (i, j + 1), (i + 1, j)]
+            check = [1 if k[0] in range(rows) and k[1] in range(cols) else 0
+                     for k in idx]
+
+            if grid[i][j]:
+                perimeter += sum([1 if not r or not grid[k[0]][k[1]] else 0
+                                  for r, k in zip(check, idx)])
     return perimeter
